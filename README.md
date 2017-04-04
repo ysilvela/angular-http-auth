@@ -1,15 +1,15 @@
 HTTP Auth Interceptor Module
 ============================
-for AngularJS
+para AngularJS
 -------------
 
-This is the implementation of the concept described in
+Es una implementacion del concepto descrito en
 [Authentication in AngularJS (or similar) based application](http://espeo.eu/blog/authentication-in-angularjs-or-similar-based-application/).
 
-There are releases for both AngularJS **1.0.x** and **1.2.x**,
+Funciona para todas las releases de AngularJS **1.0.x** and **1.2.x**,
 see [releases](https://github.com/witoldsz/angular-http-auth/releases).
 
-Launch demo [here](http://witoldsz.github.com/angular-http-auth/)
+Ver demo [aqui](http://witoldsz.github.com/angular-http-auth/)
 or switch to [gh-pages](https://github.com/witoldsz/angular-http-auth/tree/gh-pages)
 branch for source code of the demo.
 
@@ -23,25 +23,20 @@ Usage
 Manual
 ------
 
-This module installs $http interceptor and provides the `authService`.
+Este modulo instala un interceptor $http y provee del servicio `authService`.
 
-The $http interceptor does the following:
-the configuration object (this is the requested URL, payload and parameters)
-of every HTTP 401 response is buffered and everytime it happens, the
-`event:auth-loginRequired` message is broadcasted from $rootScope.
+El interceptor $http hace lo siguiente:
+La configuracion del cada llamada (la url solicitada, payload y parametros)
+de todas las respuestas HTTP 401 es almacenada en un buffer y siempre que se invoque, el mensaje
+`event:auth-loginRequired` sera emitido por broadcast a $rootScope.
 
-The `authService` has only 2 methods: `loginConfirmed()` and `loginCancelled()`.
+El servicio `authService` tiene 2 metodos: `loginConfirmed()` y `loginCancelled()`.
 
-You are responsible to invoke `loginConfirmed()` after user logs in. You may optionally pass in
-a data argument to this method which will be passed on to the loginConfirmed
-$broadcast. This may be useful, for example if you need to pass through details of the user
-that was logged in. The `authService` will then retry all the requests previously failed due
-to HTTP 401 response.
+El programador es el responsable de invocar a `loginConfirmed()` despues del login. Opcionalmente se puede pasar por argumentos a este metodo lo que se vaya a pasar a loginConfirmed
+$broadcast. Esto es muy util, por ejemplo si necesitas pasar deltalles del usuario logado. El`authService` tratara de reintentar las peticiones fallidas con respuesta HTTP 401.
 
-You are responsible to invoke `loginCancelled()` when authentication has been invalidated. You may optionally pass in
-a data argument to this method which will be passed on to the loginCancelled
-$broadcast. The `authService` will cancel all pending requests previously failed and buffered due
-to HTTP 401 response.
+El programador es el responsable de invocar a  `loginCancelled()` cuando la autenticacion ha sido invalidada. Opcionalmente puedes pasar argumentos que serán enviados al metodo loginCancelled via
+$broadcast. El `authService` cacnelara todas las peticiones pendientes antes de que falle la peticion 401.
 
 In the event that a requested resource returns an HTTP 403 response (i.e. the user is
 authenticated but not authorized to access the resource), the user's request is discarded and
